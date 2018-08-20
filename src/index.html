@@ -29,18 +29,20 @@
         global.displayValueElement = document.querySelector('#display_value');
         global.displayMessageElement = document.querySelector('#display_message');
 
-        document.addEventListerner('DOMContentLoaded', () => {
+
+        document.addEventListener('DOMContentLoaded', () => {
             global.calculateForm.addEventListener('submit', event => {
                 event.preventDefault();
+
                 calculateBMI()
                     .then(person => {
                         global.displayValueElement.innerHTML = `Your BMI is ${person.bmiValue}`;
-                        global.displayValueElement.innerHTML = `and you are ${person.bmiMessage}`;
+                        global.displayMessageElement.innerHTML = `and you are ${person.bmiMessage}`;
                     })
             })
         });
 
-        const calcaulateBMI = () => {
+        const calculateBMI = () => {
             return new Promise(resolve => {
                 let w = parseFloat(document.getElementById('weight-in-kgs').value);
                 let h = parseFloat(document.getElementById('height-in-cm').value);
@@ -51,10 +53,8 @@
                 person.calculate_bmi();
                 resolve(person);
             })
-        }
-    
+        };
     </script>
-
 
 </body>
 
