@@ -1,6 +1,7 @@
+
 const { Person, BMICalculator } = require('./spec.helper')
 
-describe("BMICalculator", function () {
+describe("BMICalculator Metric", function () {
     let bmi_calculator;
     let person;
 
@@ -18,4 +19,24 @@ describe("BMICalculator", function () {
         expect(person.bmiMessage).to.equal('Overweight');
     });
    
-})
+});
+
+describe("BMICalculator Imperial", function () {
+    let bmi_calculator;
+    let person;
+
+    beforeEach(function () {
+        person = new Person({weight: 165, height: 64});
+        calculator = new BMICalculator();
+    });
+
+    it("calculates BMI for a person using imperial method", function () {
+        calculator.imperial_bmi(person);
+        expect(person.bmiValue).to.equal(28.32);
+    });
+    
+    it("sets BMI message for a person using metric method", () => {
+        calculator.imperial_bmi(person);
+        expect(person.bmiMessage).to.equal('Overweight');
+    });
+});
