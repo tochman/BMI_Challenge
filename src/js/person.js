@@ -1,10 +1,8 @@
+// src/js/person.js
+
 function Person(attr) {
     this.weight = attr.weight;
     this.height = attr.height;
-};
-Person.prototype.calculate_bmi = function() {
-    this.bmiValue = 26.01;
-    this.bmiMessage = "Overweight"
 };
 
 Person.prototype.calculate_bmi = function () {
@@ -12,7 +10,7 @@ Person.prototype.calculate_bmi = function () {
     calculator.metric_bmi(this)
 };
 
-Person.prototype.calculate_bmi = function () {
-    calculator = new BMICalculator();
-    calculator.imperial_bmi(this)
+Person.prototype.calculate_imperial_bmi = function () {
+        calculator = new BMICalculator();
+        calculator.imperial_bmi(this)
 };
