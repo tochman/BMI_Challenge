@@ -9,39 +9,40 @@
 </head>
 
 <body>
-     <div id="header">
+    <div id="header">
         <h1><a title="BMI Calculator">BMI Calculator</a></h1>
     </div>
 
     <form id="calculate"> 
 
-     <div class="tabContainter">
+        <div class="tabContainter">
                  
-        <div class="tab">
-            <h5>Choose a method</h5>
+            <div class="tab">
+                <h5>Choose a method</h5>
 
-            <button class="button" onclick="openTab(event, 'metric')">Metric</button>
-            <button class="button" onclick="openTab(event, 'imperial')">Imperial</button>
+                <button class="button" onclick="openTab(event, 'metric')">Metric</button>
+                <button class="button" onclick="openTab(event, 'imperial')">Imperial</button>
 
-        <div id="my_select" value="system">
+        <div class="my_select" value="system">
             <div id="metric" class="tabcontent">
                     <input type="text" id="weight-in-kgs" placeholder="kg">
                     <input type="text" id="height-in-cm" placeholder="cm">
                     <button type="submit" value="Calculate"> Calculate </button>    
-        </div>
+            </div>
     
             <div id="imperial" class="tabcontent" hidden>
                     <input type="text" id="weight-in-lbs" placeholder="lbs">
                     <input type="text" id="height-in-in" placeholder="inches">
                      <button type="submit" value="Calculate"> Calculate </button>
             </div>
-        </div>
-        </form>
+
         </div>
 
+    </form>
     </div>
     </form>
-             <div>
+
+             <div id= "results">
                   <span id="display_value"></span>
                  <span id="display_message"></span>
             </div>
@@ -54,21 +55,23 @@
             global.calculateForm = document.querySelector('#calculate');
             global.displayValueElement = document.querySelector('#display_value');
             global.displayMessageElement = document.querySelector('#display_message');
+
+//problem here. How to allow the program to distinguish the two methods and take the values
             global.methodSelector = document.querySelector('#my_select');
 
         document.addEventListener('DOMContentLoaded', () => {
         global.calculateForm.addEventListener('submit', event => {
                             
          event.preventDefault();
-         var my_select = document.getElementsById('my_select').value;               
-                    calculateBMI()
-                        .then(person => {                            
-                            global.displayValueElement.innerHTML = `Your BMI is ${person.bmiValue}`;
-                            global.displayMessageElement.innerHTML = `and you are ${person.bmiMessage}`;
+                   
+                calculateBMI()
+                     .then(person => {                            
+                          global.displayValueElement.innerHTML = `Your BMI is ${person.bmiValue}`;
+                         global.displayMessageElement.innerHTML = `and you are ${person.bmiMessage}`;
                         })
                 })
             });
-    
+//wrong, as it is not taking the values from div class="my_select"
         const calculateBMI = () => {
         let method = global.methodSelector.options[global.methodSelector].value
             return new Promise(resolve => {
