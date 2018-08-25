@@ -2,69 +2,78 @@
 
 <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Body Mass Index Calculator</title>
     <script src="js/person.js"></script>
     <script src="js/calculator.js"></script>
+    <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
 <body>
-    <form id="calculate">
-        <div id="metric-inputs">
-            <input type="text" id="weight-in-kgs" placeholder="Weight">
-            <input type="text" id="height-in-cm" placeholder="Height">
-        </div>
-
-        <div id="imperial-inputs">
-            <input type="text" id="weight-in-lbs" placeholder="Weight">
-            <input type="text" id="height-in-in" placeholder="Height">
-        </div>
-
-        <div class='form-group row'>
-            <div class="col-auto">
-                <select class='form-control' id="my_select">
-                <option value="metric">Metric Method</option>
-                <option value="imperial">Imperial Method</option>
-            </select>
-            </div>
-
-        </div>
-
-        <button type="submit" value="Calculate"> Calculate </button>
-    </form>
-    <div>
-        <span id="display_value"></span>
-        <span id="display_message"></span>
+     <div id="header">
+        <h1><a title="BMI Calculator">BMI Calculator</a></h1>
     </div>
 
+    <form id="calculate"> 
 
-    <script type="text/javascript">
+     <div class="tabContainter">
+                 
+        <div class="tab">
+            <h5>Choose a method</h5>
 
-        const global = {}
-        global.calculateForm = document.querySelector('#calculate');
-        global.displayValueElement = document.querySelector('#display_value');
-        global.displayMessageElement = document.querySelector('#display_message');
-        global.methodSelector = document.querySelector('#my_select');
+            <button class="button" onclick="openTab(event, 'metric')">Metric</button>
+            <button class="button" onclick="openTab(event, 'imperial')">Imperial</button>
 
+        <div id="my_select" value="system">
+            <div id="metric" class="tabcontent">
+                    <input type="text" id="weight-in-kgs" placeholder="kg">
+                    <input type="text" id="height-in-cm" placeholder="cm">
+                    <button type="submit" value="Calculate"> Calculate </button>    
+        </div>
+    
+            <div id="imperial" class="tabcontent" hidden>
+                    <input type="text" id="weight-in-lbs" placeholder="lbs">
+                    <input type="text" id="height-in-in" placeholder="inches">
+                     <button type="submit" value="Calculate"> Calculate </button>
+            </div>
+        </div>
+        </form>
+        </div>
+
+    </div>
+    </form>
+             <div>
+                  <span id="display_value"></span>
+                 <span id="display_message"></span>
+            </div>
+            
+            
+ <script type="text/javascript">
+
+
+       const global = {}
+            global.calculateForm = document.querySelector('#calculate');
+            global.displayValueElement = document.querySelector('#display_value');
+            global.displayMessageElement = document.querySelector('#display_message');
+            global.methodSelector = document.querySelector('#my_select');
 
         document.addEventListener('DOMContentLoaded', () => {
-            global.calculateForm.addEventListener('submit', event => {
-                
-                event.preventDefault();
-
-                calculateBMI()
-                    .then(person => {
-                        global.displayValueElement.innerHTML = `Your BMI is ${person.bmiValue}`;
-                        global.displayMessageElement.innerHTML = `and you are ${person.bmiMessage}`;
-                    })
+        global.calculateForm.addEventListener('submit', event => {
+                            
+         event.preventDefault();
+         var my_select = document.getElementsById('my_select').value;               
+                    calculateBMI()
+                        .then(person => {                            
+                            global.displayValueElement.innerHTML = `Your BMI is ${person.bmiValue}`;
+                            global.displayMessageElement.innerHTML = `and you are ${person.bmiMessage}`;
+                        })
                 })
-        });
-
+            });
+    
         const calculateBMI = () => {
-            let method = global.methodSelector.options[global.methodSelector.selectedIndex].value
+        let method = global.methodSelector.options[global.methodSelector].value
             return new Promise(resolve => {
                 let weightFormat = method === 'metric' ? 'weight-in-kgs' : 'weight-in-lbs'
                 let heightFormat = method === 'metric' ? 'height-in-cm' : 'height-in-in'
-
                 let w = parseFloat(document.getElementById(weightFormat).value);
                 let h = parseFloat(document.getElementById(heightFormat).value);
                 let person = new Person({
@@ -75,7 +84,27 @@
                 resolve(person);
             })
         };
-</script>
-</body>
 
-</html>
+//style tab button
+        function openTab(evt, system) {
+
+        let i, button, tabcontent;
+
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+        }
+
+        button = document.getElementsByClassName("button");
+        for (i =0; i < button.length; i++) {
+        button[i].className = button[i].className.replace(" active", "");
+        }
+
+        document.getElementById(system).style.display = "block";
+        evt.currentTarget.className += " active";
+        }
+     </script>
+
+</body>
+            
+</html>    
